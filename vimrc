@@ -5,6 +5,7 @@ set sw=4
 set sts=4
 set et
 set background=dark
+set encoding=utf8
 
 set cin
 
@@ -38,6 +39,7 @@ Plugin 'fatih/vim-go'
 Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
 Plugin 'dln/avro-vim'
+Plugin 'ryanoasis/vim-devicons'
 
 filetype plugin indent on     " required
 
@@ -77,6 +79,8 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_term_enabled = 1
 let g:go_term_mode = "split"
+
+let g:airline_powerline_fonts = 1
 
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1

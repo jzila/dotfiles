@@ -40,10 +40,6 @@ source $ZSH/oh-my-zsh.sh
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:$HOME/bin
 export LD_LIBRARY_PATH=/usr/local/lib
 
-export FLYNN_HOME=$HOME/repos/go/src/github.com/flynn/flynn
-
-
-
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ll='ls -l'
@@ -92,3 +88,13 @@ export GOPATH="$HOME/repos/go"
 export GOROOT=
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/apps/android-studio/bin:$PATH"
+
+### Ensure that docker commands can be run
+if [[ "$(uname)" == 'Darwin' ]]; then
+    docker_env="$(docker-machine env default)"
+    if [[ "$?" != "0" ]]; then
+        docker-machine start default
+        docker_env="$(docker-machine env default)"
+    fi
+    eval $docker_env
+fi
