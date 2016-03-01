@@ -1,4 +1,7 @@
 # Path to your oh-my-zsh configuration.
+if [ ! -e "$HOME/.oh-my-zsh" ]; then
+    git clone git@github.com:jzila/oh-my-zsh.git $HOME/.oh-my-zsh
+fi
 ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
