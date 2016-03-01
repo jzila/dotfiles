@@ -37,10 +37,10 @@ plugins=(git vi-mode svn history-substring-search)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:/home/john/bin
+export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:$HOME/bin
 export LD_LIBRARY_PATH=/usr/local/lib
 
-export FLYNN_HOME=/home/john/repos/go/src/github.com/flynn/flynn
+export FLYNN_HOME=$HOME/repos/go/src/github.com/flynn/flynn
 
 
 
@@ -82,12 +82,12 @@ bindkey '^[[B' history-substring-search-down
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-export JZ_REPO="/home/john/repos/go/src/github.com/jzila"
-export KB_REPO="/home/john/repos/go/src/github.com/keybase"
+export JZ_REPO="$HOME/repos/go/src/github.com/jzila"
+export KB_REPO="$HOME/repos/go/src/github.com/keybase"
 
-[[ -s "/home/john/.gvm/scripts/gvm" ]] && source "/home/john/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-export GOPATH="/home/john/repos/go"
+export GOPATH="$HOME/repos/go"
 export GOROOT=
 export PATH="$GOPATH/bin:$PATH"
-export PATH="/home/john/apps/android-studio/bin:$PATH"
+export PATH="$HOME/apps/android-studio/bin:$PATH"
