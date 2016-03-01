@@ -48,6 +48,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ll='ls -l'
 alias la='ls -la'
+alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
 
 alias livelock='ssh jzila@192.241.238.163'
 
