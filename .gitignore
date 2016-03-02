@@ -1,3 +1,4 @@
+.vim/.netrwhist
 .vim/backup
 .vim/bundle/avro-vim
 .vim/bundle/neocomplcache.vim
@@ -8,6 +9,6 @@
 .vim/bundle/vim-airline
 .vim/bundle/vim-devicons
 .vim/bundle/vim-go
+.vim/tmp
 .vim/undo
-.vim/.netrwhist
 .vim/viminfo
