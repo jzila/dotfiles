@@ -91,33 +91,27 @@ export PATH="$HOME/apps/android-studio/bin:$PATH"
 
 # echo the path relative to the root of the current repository, or the current
 # directory if none can be found
-# Example:
-#   dotfiles/local/bin $ up
-#   Found .git at .../dotfiles
-#   dotfiles $
 repodir() {
     local old_pwd="$PWD"
-    local dirname="${PWD##*/}"
-    local counter=".."
+    local counter="."
     while [[ 1 ]]; do
         local cur_pwd="$(echo -n $(cd $counter && pwd))"
         if [[ "$cur_pwd" == "/" ]]; then
-            echo "$dirname"
+            echo "${PWD##*/}"
             return 0
         fi
         for repo in "$cur_pwd/.git" "$cur_pwd/.hg"; do
             if [[ -d "$repo" ]]; then
-                counter="$counter/.."
-                cur_pwd="$(echo -n $(cd $counter && pwd))"
+                cur_pwd="$(echo -n $(cd ../$counter && pwd))"
                 echo "${old_pwd#$cur_pwd/}"
                 return 0
             fi
         done
-        counter="$counter/.."
+        counter="../$counter"
     done
 }
 
-PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.▶)%{$fg_bold[blue]%} % %{$reset_color%}'
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
 
 ### Ensure that docker commands can be run
 if [[ "$(uname)" == 'Darwin' ]]; then
