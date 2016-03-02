@@ -1,0 +1,13 @@
+.vim/backup
+.vim/bundle/avro-vim
+.vim/bundle/neocomplcache.vim
+.vim/bundle/neomake
+.vim/bundle/nimrod.vim
+.vim/bundle/rust.vim
+.vim/bundle/tagbar
+.vim/bundle/vim-airline
+.vim/bundle/vim-devicons
+.vim/bundle/vim-go
+.vim/undo
+.vim/.netrwhist
+.vim/viminfo
