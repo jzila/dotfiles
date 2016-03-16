@@ -85,7 +85,6 @@ export KB_REPO="$HOME/repos/go/src/github.com/keybase"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 export GOPATH="$HOME/repos/go"
-export GOROOT=
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/apps/android-studio/bin:$PATH"
 
