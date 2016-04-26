@@ -111,3 +111,13 @@ repodir() {
 }
 
 PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
+
+### Ensure that docker commands can be run
+if [[ "$(uname)" == 'Darwin' ]]; then
+    docker_env="$(docker-machine env default)"
+    if [[ "$?" != "0" ]]; then
+        docker-machine start default
+        docker_env="$(docker-machine env default)"
+    fi
+    eval $docker_env
+fi
