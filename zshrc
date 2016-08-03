@@ -52,11 +52,12 @@ alias grep='grep -I --exclude-dir="*\.svn*" --exclude="*\.svn-base"'
 alias grepnolog='grep -I --exclude-dir="*log*" --exclude-dir="*\.svn*" --exclude="*\.svn-base"'
 
 
-alias gup='git pull --rebase upstream master'
+alias gup='git fetch origin && git rebase origin/master'
 alias gp='git push -u origin'
 alias gfu='git fetch upstream'
 alias gfo='git fetch origin'
 alias gr='git rebase'
+alias grm='git rebase origin/master'
 
 alias sift='sift --binary-skip'
 
@@ -110,14 +111,26 @@ repodir() {
     done
 }
 
+open_tunnel() {
+    if [ "$1" ]; then
+        PORT=2222
+        if [ "$2" ]; then
+            PORT=$2
+        fi
+        ssh -L $PORT:$1:22 jzila@gw1.keybase.io
+    else
+        echo "No argument specified"
+    fi
+}
+
 PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
 
 ### Ensure that docker commands can be run
-if [[ "$(uname)" == 'Darwin' ]]; then
-    docker_env="$(docker-machine env default)"
-    if [[ "$?" != "0" ]]; then
-        docker-machine start default
-        docker_env="$(docker-machine env default)"
-    fi
-    eval $docker_env
-fi
+# if [[ "$(uname)" == 'Darwin' ]]; then
+#     docker_env="$(docker-machine env default)"
+#     if [[ "$?" != "0" ]]; then
+#         docker-machine start default
+#         docker_env="$(docker-machine env default)"
+#     fi
+#     eval $docker_env
+# fi
