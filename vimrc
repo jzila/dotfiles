@@ -18,6 +18,8 @@ let g:molokai_original = 1
 color molokai
 syntax enable
 
+set modeline
+
 " Neovim features
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
@@ -32,7 +34,7 @@ Plugin 'gmarik/vundle'
 Plugin 'zah/nimrod.vim'
 " TODO migrate to 'benekastah/neomake'
 " Plugin 'scrooloose/syntastic'
-Plugin 'benekastah/neomake'
+" Plugin 'benekastah/neomake'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'wting/rust.vim'
 Plugin 'fatih/vim-go'
@@ -40,6 +42,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
 Plugin 'dln/avro-vim'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'kchmck/vim-coffee-script'
 
 filetype plugin indent on     " required
 
@@ -49,9 +52,10 @@ set completeopt+=longest
 let g:neocomplcache_enable_auto_select = 1 
 au BufEnter * inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "<TAB>"
 au BufEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>"
-au BufRead,BufNewFile *.avdl setlocal filetype=avro-idl
 
-autocmd BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.avdl setlocal filetype=avro-idl
+au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.iced set filetype=coffee
 
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -136,7 +140,7 @@ augroup titlebar
 augroup END
 "---------------------------------------------------------------------------
 
-function! DoPrettyXML()
+fun! DoPrettyXML()
   " save the filetype so we can restore it later
   let l:origft = &ft
   set ft=

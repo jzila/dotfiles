@@ -86,7 +86,7 @@ export KB_REPO="$HOME/repos/go/src/github.com/keybase"
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 export GOPATH="$HOME/repos/go"
-export PATH="$GOPATH/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/apps/android-studio/bin:$PATH"
 
 # echo the path relative to the root of the current repository, or the current
