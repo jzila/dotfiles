@@ -94,7 +94,7 @@ export PATH="$HOME/apps/android-studio/bin:$PATH"
 repodir() {
     local old_pwd="$PWD"
     local counter="."
-    while [[ 1 ]]; do
+    while true; do
         local cur_pwd="$(echo -n $(cd $counter && pwd))"
         if [[ "$cur_pwd" == "/" ]]; then
             echo "${PWD##*/}"
