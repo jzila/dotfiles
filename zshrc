@@ -117,7 +117,7 @@ open_tunnel() {
         if [ "$2" ]; then
             PORT=$2
         fi
-        ssh -L $PORT:$1:22 jzila@gw1.keybase.io
+        ssh -L $PORT:$1:22 jzila@gw.keybase.io
     else
         echo "No argument specified"
     fi
