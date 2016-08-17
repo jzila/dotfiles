@@ -114,10 +114,14 @@ repodir() {
 open_tunnel() {
     if [ "$1" ]; then
         PORT=2222
+        REMOTE_PORT=22
         if [ "$2" ]; then
             PORT=$2
+            if [ "$3" ]; then
+                REMOTE_PORT=$3
+            fi
         fi
-        ssh -L $PORT:$1:22 jzila@gw.keybase.io
+        ssh -L $PORT:$1:$REMOTE_PORT jzila@gw.keybase.io
     else
         echo "No argument specified"
     fi
