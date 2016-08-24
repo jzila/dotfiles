@@ -111,6 +111,20 @@ repodir() {
     done
 }
 
+reporoot() {
+    git rev-parse --show-toplevel
+}
+
+gopkgpath() {
+    root=$(git rev-parse --show-toplevel)
+    gopath=$(go env GOPATH)
+    echo ${root##${gopath}/}
+}
+
+godocker() {
+    docker run -it --net="host" -v $(reporoot):/go/$(gopkgpath) --entrypoint bash -w "/go/$(gopkgpath)" golang:1.7
+}
+
 open_tunnel() {
     if [ "$1" ]; then
         PORT=2222
