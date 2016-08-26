@@ -125,6 +125,10 @@ godocker() {
     docker run -it --net="host" -v $(reporoot):/go/$(gopkgpath) --entrypoint bash -w "/go/$(gopkgpath)" golang:1.7
 }
 
+indocker() {
+    docker run -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
+}
+
 open_tunnel() {
     if [ "$1" ]; then
         PORT=2222
