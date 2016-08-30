@@ -122,15 +122,15 @@ gopkgpath() {
 }
 
 godocker() {
-    docker run -it --net="host" -v $(reporoot):/go/$(gopkgpath) --entrypoint bash -w "/go/$(gopkgpath)" golang:1.7
+    docker run -it --rm --net="host" -v $(reporoot):/go/$(gopkgpath) --entrypoint bash -w "/go/$(gopkgpath)" golang:1.7
 }
 
 indocker() {
-    docker run -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
+    docker run --rm -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
 }
 
 itdocker() {
-    docker run -it -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
+    docker run --rm -it -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
 }
 
 open_tunnel() {
