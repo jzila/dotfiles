@@ -129,6 +129,10 @@ indocker() {
     docker run -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
 }
 
+itdocker() {
+    docker run -it -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
+}
+
 open_tunnel() {
     if [ "$1" ]; then
         PORT=2222
