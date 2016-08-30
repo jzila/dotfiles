@@ -122,7 +122,7 @@ gopkgpath() {
 }
 
 godocker() {
-    docker run --rm -it --net="host" -v $(reporoot):/go/$(gopkgpath) --entrypoint bash -w "/go/$(gopkgpath)" golang:1.7
+    docker run --rm -it --net="host" -v $(reporoot):/go/$(gopkgpath) --entrypoint bash -w "/go/$(gopkgpath)/../$(repodir)" golang:1.7
 }
 
 indocker() {
