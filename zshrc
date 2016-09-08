@@ -156,3 +156,9 @@ PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) 
 #     fi
 #     eval $docker_env
 # fi
+
+if [ "$ANDROID_ROOT" ]; then
+	PATH=/system/bin:/data/data/com.termux/files/home/apps/android-studio/bin:/data/data/com.termux/files/home/repos/go/bin:/usr/local/heroku/bin:/usr/local/heroku/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:/data/data/com.termux/files/home/bin
+	PATH=/data/data/com.termux/files/usr/bin:/system/bin:/data/data/com.termux/files/home/apps/android-studio/bin:/data/data/com.termux/files/home/repos/go/bin:/usr/local/heroku/bin:/usr/local/heroku/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:/data/data/com.termux/files/home/bin
+	export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib
+fi
