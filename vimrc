@@ -103,7 +103,6 @@ au FileType go nmap <leader>gc <Plug>(go-callers)
 au FileType go nmap <leader>gr <Plug>(go-referrers)
 au FileType go TagbarOpen
 au FileType go let g:neocomplcache_ctags_program = "gotags"
-au BufWritePost *.go GoInstall
 
 " Quickfix window should go to the bottom
 au FileType qf wincmd J
