@@ -147,6 +147,9 @@ open_tunnel() {
 
 PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
 
+TMOUT=1
+TRAPALRM() { zle reset-prompt }
+
 ### Ensure that docker commands can be run
 # if [[ "$(uname)" == 'Darwin' ]]; then
 #     docker_env="$(docker-machine env default)"

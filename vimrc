@@ -18,7 +18,7 @@ let g:molokai_original = 1
 color molokai
 syntax enable
 
-set modeline
+set nomodeline
 
 " Neovim features
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
