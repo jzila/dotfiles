@@ -38,7 +38,6 @@ Plugin 'zah/nimrod.vim'
 Plugin 'Shougo/neocomplcache.vim'
 Plugin 'wting/rust.vim'
 Plugin 'fatih/vim-go'
-Plugin 'majutsushi/tagbar'
 Plugin 'bling/vim-airline'
 Plugin 'dln/avro-vim'
 Plugin 'ryanoasis/vim-devicons'
@@ -73,12 +72,11 @@ endif
 
 "----------------------
 " Go commands
-"let g:go_fmt_command = "goimports"
-"let g:go_fmt_fail_silently = 1
-let g:go_fmt_options = "-s"
+let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_term_enabled = 1
@@ -101,7 +99,6 @@ au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap <leader>gc <Plug>(go-callers)
 au FileType go nmap <leader>gr <Plug>(go-referrers)
-au FileType go TagbarOpen
 au FileType go let g:neocomplcache_ctags_program = "gotags"
 
 " Quickfix window should go to the bottom
@@ -168,6 +165,12 @@ fun! JumpToDef()
         exe "norm! \<C-]>"
     endif
 endf
+
+let g:S = 0
+function! Sum(number)
+    let g:S = g:S + a:number
+    return a:number
+endfunction
 
 " Jump to tag
 nn <M-g> :call JumpToDef()<cr>

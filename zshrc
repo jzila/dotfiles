@@ -36,6 +36,8 @@ plugins=(git vi-mode svn history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
+source /keybase/private/jzila/dotfiles/zshrc
+
 # Customize to your needs...
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:$HOME/bin
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -129,39 +131,4 @@ indocker() {
     docker run --rm -it -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
 }
 
-open_tunnel() {
-    if [ "$1" ]; then
-        PORT=2222
-        REMOTE_PORT=22
-        if [ "$2" ]; then
-            PORT=$2
-            if [ "$3" ]; then
-                REMOTE_PORT=$3
-            fi
-        fi
-        ssh -L $PORT:$1:$REMOTE_PORT jzila@gw.keybase.io
-    else
-        echo "No argument specified"
-    fi
-}
-
 PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
-
-TMOUT=1
-TRAPALRM() { zle reset-prompt }
-
-### Ensure that docker commands can be run
-# if [[ "$(uname)" == 'Darwin' ]]; then
-#     docker_env="$(docker-machine env default)"
-#     if [[ "$?" != "0" ]]; then
-#         docker-machine start default
-#         docker_env="$(docker-machine env default)"
-#     fi
-#     eval $docker_env
-# fi
-
-if [ "$ANDROID_ROOT" ]; then
-	PATH=/system/bin:/data/data/com.termux/files/home/apps/android-studio/bin:/data/data/com.termux/files/home/repos/go/bin:/usr/local/heroku/bin:/usr/local/heroku/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:/data/data/com.termux/files/home/bin
-	PATH=/data/data/com.termux/files/usr/bin:/system/bin:/data/data/com.termux/files/home/apps/android-studio/bin:/data/data/com.termux/files/home/repos/go/bin:/usr/local/heroku/bin:/usr/local/heroku/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:/data/data/com.termux/files/home/bin
-	export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib
-fi
