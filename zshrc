@@ -69,7 +69,6 @@ unset correctall
 set correct
 
 export PATH="/usr/local/heroku/bin:$PATH"
-export GREP_OPTIONS='--color=auto --exclude="*.svn-base"'
 export GREP_COLOR='1;31'
 # export PORT=8084
 
@@ -91,11 +90,17 @@ export GOPATH="$HOME/repos/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/apps/android-studio/bin:$PATH"
 
+export RUN_MODE=devel
+
 # echo the path relative to the root of the current repository, or the current
 # directory if none can be found
 repodir() {
     local old_pwd="$PWD"
     local counter="."
+    if [[ "${PWD##/keybase/}" != "$old_pwd" ]]; then
+        echo "${PWD##*/}"
+        return 0
+    fi
     while true; do
         local cur_pwd="$(echo -n $(cd $counter && pwd))"
         if [[ "$cur_pwd" == "/" ]]; then
@@ -117,10 +122,33 @@ reporoot() {
     git rev-parse --show-toplevel
 }
 
+gitprompt() {
+    if [[ "${PWD##/keybase/}" != "$PWD" ]]; then
+        return
+    fi
+    git_prompt_info "$@"
+}
+
 gopkgpath() {
     root=$(git rev-parse --show-toplevel)
     gopath=$(go env GOPATH)
     echo ${root##${gopath}/}
+}
+
+purge_old_kernels() {
+    dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge
+}
+
+dcleanup(){
+	local containers
+	containers=( $(docker ps -aq 2>/dev/null) )
+	docker rm "${containers[@]}" 2>/dev/null
+	local volumes
+	volumes=( $(docker volume ls --filter dangling=true -q 2>/dev/null) )
+	docker volume rm "${volumes[@]}" 2>/dev/null
+	local images
+	images=( $(docker images --filter dangling=true -q 2>/dev/null) )
+	docker rmi "${images[@]}" 2>/dev/null
 }
 
 godocker() {
@@ -131,4 +159,5 @@ indocker() {
     docker run --rm -it -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
 }
 
-PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(gitprompt)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
+
