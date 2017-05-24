@@ -159,5 +159,36 @@ indocker() {
     docker run --rm -it -v $PWD:/home/foo -w "/home/foo" debian:jessie $@
 }
 
-PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(gitprompt)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
+search_chats() {
+    if [ "$1" ] && [ "$2" ]; then
+        USERS=$1
+        NEEDLE=$2
+        ME=$(keybase status --json | jq -r ".Username")
+        READER_JSON="
+          {
+            \"method\": \"read\",
+            \"params\": {
+              \"version\": 1,
+              \"options\": {
+                \"channel\": {
+                  \"name\": \"$ME,$USERS\"
+                },
+                \"peek\": true,
+                \"unread_only\": false
+              }
+            }
+          }
+        "
+        echo "Searching for '$NEEDLE' in '$ME,$USERS'"
+        keybase chat api -p -m "$READER_JSON" | jq ".result.messages[].msg |
+                select(.content.text.body != null) |
+                select(.content.text.body | test(\"$NEEDLE\"; \"i\")) |
+                {id: .id, sent_at: .sent_at | todateiso8601, sender: .sender.username, msg: .content.text.body}
+            "
+    else
+        echo "Usage: search_chats \"other,users,in,chat\" \"case insensitive regex to search\""
+        return 1
+    fi
+}
 
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(gitprompt)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
