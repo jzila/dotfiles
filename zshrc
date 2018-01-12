@@ -55,6 +55,7 @@ alias grepnolog='grep -I --exclude-dir="*log*" --exclude-dir="*\.svn*" --exclude
 
 
 alias gup='git fetch origin && git rebase origin/master'
+alias gds='git --no-pager diff --stat'
 alias gp='git push -u origin'
 alias gfu='git fetch upstream'
 alias gfo='git fetch origin'
