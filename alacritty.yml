@@ -1,0 +1,30 @@
+# Alacritty configuration file
+
+# Shell
+shell:
+  program: "/usr/bin/env"
+  args:
+    - tmux
+    - new-session
+
+# Window configuration
+window:
+  padding:
+    x: 0
+    y: 0
+  decorations: "full"
+  opacity: 0.95
+
+# Font configuration
+font:
+  normal:
+    family: "Hack"
+    style: "Regular"
+  size: 11.0
+
+# Colors (Gruvbox dark)
+colors:
+  primary:
+    background: '#181818'
+    foreground: '#ebdbb2'
+
