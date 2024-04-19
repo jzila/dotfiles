@@ -1,47 +1,9 @@
-# Path to your oh-my-zsh configuration.
-if [ ! -e "$HOME/.oh-my-zsh" ]; then
-    git clone git@github.com:jzila/oh-my-zsh.git $HOME/.oh-my-zsh
-fi
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="jzila"
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
 ZSH_AUTOSUGGEST_STRATEGY=(history)
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode svn history-substring-search zsh-autosuggestions zsh-syntax-highlighting bgnotify)
-
-source $ZSH/oh-my-zsh.sh
-
-zstyle ':completion:*' accept-exact-dirs true
-
-# Customize to your needs...
-export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:$HOME/bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:$HOME/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/lib
 if [ "$(uname -s)" = "Darwin" ]; then
     export ANDROID_HOME=$HOME/Library/Android/sdk
@@ -94,10 +56,7 @@ unsetopt nomatch 2>/dev/null
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-export PATH="$PATH:$HOME/.yarn/bin"
-
 export JZ_REPO="$HOME/repos/go/src/github.com/jzila"
-export KB_REPO="$HOME/repos/go/src/github.com/keybase"
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
@@ -192,9 +151,10 @@ yubikey() {
 
 PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(gitprompt)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
 
-# bun completions
-[ -s "/home/john/.bun/_bun" ] && source "/home/john/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# fix this for nixos once I'm ready
+# # bun completions
+# [ -s "/home/john/.bun/_bun" ] && source "/home/john/.bun/_bun"
+# 
+# # bun
+# export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
