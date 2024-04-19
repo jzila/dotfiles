@@ -9,6 +9,16 @@
 .vim/bundle/vim-airline
 .vim/bundle/vim-devicons
 .vim/bundle/vim-go
+.vim/bundle/vim-coffee-script
+.vim/bundle/vim-surround
+.vim/bundle/ale
+.vim/bundle/deoplete.nvim
+.vim/bundle/deoplete-flow
+.vim/bundle/vim-flow
+.vim/bundle/deoplete-go
+.vim/bundle/LanguageClient-neovim
+.vim/bundle/autocomplete-flow
+.vim/bundle/scss-syntax.vim
 .vim/tmp
 .vim/undo
 .vim/viminfo
