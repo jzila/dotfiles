@@ -4,8 +4,8 @@ set ts=4
 set sw=4
 set sts=4
 set et
-set background=dark
 set encoding=utf8
+set background=dark
 
 set cin
 
@@ -14,48 +14,80 @@ set incsearch
 
 set mouse=a
 
-let g:molokai_original = 1
-color molokai
-syntax enable
-
 set nomodeline
+
+set number relativenumber
+
+" Text highlight overrides
+set list listchars=tab:\›\ ,trail:-,extends:>,precedes:<,eol:¬,space:·
+highlight WhitespaceBeginning ctermfg=236
+highlight WhitespaceMiddle ctermfg=232
+match WhitespaceMiddle /\(\s\+\|\n\)/
+2match WhitespaceBeginning /^\s\+/
+au BufReadPost,BufNewFile,ColorScheme * match WhitespaceMiddle /\(\s\+\|\n\)/
+                                \ | 2match WhitespaceBeginning /^\s\+/
+                                \ | highlight WhitespaceBeginning ctermfg=236
+                                \ | highlight WhitespaceMiddle ctermfg=232
 
 " Neovim features
 " let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" Load plugins
+" Use :PlugInstall the first time
+call plug#begin('~/.local/share/nvim/plugged')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
-Plugin 'zah/nimrod.vim'
-" TODO migrate to 'benekastah/neomake'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'benekastah/neomake'
-Plugin 'Shougo/neocomplcache.vim'
-Plugin 'wting/rust.vim'
-Plugin 'fatih/vim-go'
-Plugin 'bling/vim-airline'
-Plugin 'dln/avro-vim'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'kchmck/vim-coffee-script'
+Plug 'gmarik/vundle'
+Plug 'zah/nimrod.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'wting/rust.vim'
+Plug 'fatih/vim-go'
+Plug 'bling/vim-airline'
+Plug 'dln/avro-vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'w0rp/ale'
+Plug 'wokalski/autocomplete-flow'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'cakebaker/scss-syntax.vim'
+" Typescript
+" FIXME: this seems to interfere with languageclient
+" Plug 'leafgarland/typescript-vim'
+" Plug 'peitalin/vim-jsx-typescript'
+" Various language highlighting
+Plug 'sheerun/vim-polyglot'
+Plug 'wellle/targets.vim'
+
+call plug#end()
 
 filetype plugin indent on     " required
+let g:molokai_original = 1
+color molokai
+syntax enable
 
 " Language specific
-let g:neocomplcache_enable_at_startup = 1
-set completeopt+=longest 
-let g:neocomplcache_enable_auto_select = 1 
-au BufEnter * inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "<TAB>"
-au BufEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "<TAB>"
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 
 au BufRead,BufNewFile *.avdl setlocal filetype=avro-idl
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.iced set filetype=coffee
+au BufRead,BufNewFile *.ts set filetype=typescript ts=2 sw=2
+au BufRead,BufNewFile *.tsx set filetype=typescript.tsx ts=2 sw=2
 
+" select pasted text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Keep all temporary and backup files in ~/.vim
@@ -81,8 +113,40 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_term_enabled = 1
 let g:go_term_mode = "split"
+let g:go_def_mode = "gopls"
 
 let g:airline_powerline_fonts = 1
+
+let g:LanguageClient_serverCommands = {
+\ 'javascript': ['javascript-typescript-stdio'],
+\ 'javascript.jsx': ['javascript-typescript-stdio', '--jsx'],
+\ 'typescript': ['javascript-typescript-stdio'],
+\ 'typescript.tsx': ['javascript-typescript-stdio', '--jsx']
+\ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_selectionUI = 'location-list'
+let g:LanguageClient_diagnosticsList = 'Location'
+
+
+" ALE
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint', 'prettier'],
+\   'scss': ['prettier', 'stylelint'],
+\   'typescript': ['eslint', 'prettier'],
+\   'typescript.jsx': ['eslint', 'prettier'],
+\}
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_linters_explicit = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'scss': ['stylelint'],
+\   'typescript': ['eslint'],
+\   'typescript.jsx': ['eslint'],
+\}
+let g:ale_fix_on_save = 1
 
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
@@ -104,6 +168,12 @@ au FileType go let g:neocomplcache_ctags_program = "gotags"
 " Quickfix window should go to the bottom
 au FileType qf wincmd J
 
+au FileType javascript setl ts=2 sw=2 et
+au FileType html setl ts=2 sw=2 et
+au FileType css setl ts=2 sw=2 et
+au FileType sass setl ts=2 sw=2 et
+au FileType scss setl ts=2 sw=2 et
+au FileType eruby setl ts=2 sw=2 et
 
 " Airline
 
@@ -170,6 +240,29 @@ let g:S = 0
 function! Sum(number)
     let g:S = g:S + a:number
     return a:number
+endfunction
+
+" Auto mkdir on save
+augroup vimrc-auto-mkdir
+  autocmd!
+  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+  function! s:auto_mkdir(dir, force)
+    if !isdirectory(a:dir)
+          \   && (a:force
+          \       || input("'" . a:dir . "' does not exist. Create? [y/N]") =~? '^y\%[es]$')
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+  endfunction
+augroup END
+
+function! ToggleVerbose()
+  if !&verbose
+    set verbosefile=~/.log/vim/verbose.log
+    set verbose=15
+  else
+    set verbose=0
+    set verbosefile=
+  endif
 endfunction
 
 " Jump to tag

@@ -1,1 +1,12 @@
-Include /keybase/private/jzila/dotfiles/sshconfig
+# Include before specifying the default user, so that any User entries
+# specified by the include take precedence to the default.
+# Include <file>
+
+Host unifi.local.zila.dev
+  PubkeyAcceptedAlgorithms +ssh-rsa
+  HostkeyAlgorithms +ssh-rsa
+  User john
+
+# This needs to be at the bottom, so any overrides can happen first.
+Host *
+  User jzila
