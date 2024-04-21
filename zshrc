@@ -1,7 +1,4 @@
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-ZSH_AUTOSUGGEST_STRATEGY=(history)
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/go/bin:$HOME/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -29,7 +26,6 @@ alias livelock='ssh jzila@192.241.238.163'
 alias grep='grep -I --exclude-dir=".git" --exclude-dir="vendor" --exclude-dir="node_modules" --exclude-dir=dist'
 alias grepnolog='grep -I --exclude-dir="*log*" --exclude-dir="*\.svn*" --exclude="*\.svn-base"'
 
-
 alias gup='git fetch origin && git rebase origin/main'
 alias gds='git --no-pager diff --stat'
 alias gp='git push'
@@ -53,25 +49,10 @@ export GREP_COLOR='1;31'
 ### Prevent the shell from blocking a command with mismatched arguments
 unsetopt nomatch 2>/dev/null
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
 export JZ_REPO="$HOME/repos/go/src/github.com/jzila"
-
-[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export GOPATH="$HOME/repos/go"
 export PATH="$PATH:$GOPATH/bin"
-
-export RUN_MODE=devel
-
-unset KEYBASE_PERF
-export KEYBASE_LOCAL_DEBUG=1
-export KEYBASE_FEATURES="admin"
 
 # echo the path relative to the root of the current repository, or the current
 # directory if none can be found

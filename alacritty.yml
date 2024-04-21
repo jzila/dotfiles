@@ -5,7 +5,6 @@ shell:
   program: "/usr/bin/env"
   args:
     - tmux
-    - new-session
 
 # Window configuration
 window:
