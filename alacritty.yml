@@ -2,9 +2,7 @@
 
 # Shell
 shell:
-  program: "/usr/bin/env"
-  args:
-    - tmux
+  program: "tmux"
 
 # Window configuration
 window:
