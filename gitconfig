@@ -32,7 +32,5 @@
     conflictstyle = diff3
 [rerere]
     enabled = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [init]
 	defaultBranch = main

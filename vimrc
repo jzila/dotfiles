@@ -86,6 +86,7 @@ au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead,BufNewFile *.iced set filetype=coffee
 au BufRead,BufNewFile *.ts set filetype=typescript ts=2 sw=2
 au BufRead,BufNewFile *.tsx set filetype=typescript.tsx ts=2 sw=2
+au BufRead,BufNewFile *.go set noet
 
 " select pasted text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
