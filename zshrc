@@ -18,7 +18,7 @@ alias ll='ls -l'
 alias la='ls -la'
 alias l1='ls -1'
 alias l1a='ls -1a'
-alias vim='NVIM_TUI_ENABLE_TRUE_COLOR=1 nvim'
+alias vim='lvim'
 alias yubigw='yubikey gw'
 
 alias livelock='ssh jzila@192.241.238.163'
@@ -135,7 +135,7 @@ PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) 
 # fix this for nixos once I'm ready
 # # bun completions
 # [ -s "/home/john/.bun/_bun" ] && source "/home/john/.bun/_bun"
-# 
+#
 # # bun
 # export BUN_INSTALL="$HOME/.bun"
 # export PATH="$BUN_INSTALL/bin:$PATH"
