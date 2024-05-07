@@ -57,6 +57,7 @@ export PATH="$PATH:$GOPATH/bin"
 # echo the path relative to the root of the current repository, or the current
 # directory if none can be found
 repodir() {
+    unset -f _direnv_hook
     local old_pwd="$PWD"
     local counter="."
     if [[ "${PWD##/keybase/}" != "$old_pwd" ]]; then
