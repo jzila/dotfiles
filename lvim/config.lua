@@ -24,11 +24,14 @@ lvim.keys.normal_mode["<C-t>"] = ':b#<CR>'
 lvim.keys.normal_mode["<C-w>n"] = ':bn<CR>'
 lvim.keys.normal_mode["<C-w>p"] = ':bp<CR>'
 lvim.keys.normal_mode["<C-w>t"] = ':NvimTreeToggle<CR>'
-
-local ok, copilot = pcall(require, "copilot")
-if not ok then
-  return
+lvim.keys.visual_mode["<leader>ccq"] = function()
+  local input = vim.fn.input("Quick Chat: ")
+  if input ~= "" then
+    require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+  end
 end
+
+local copilot = require("copilot")
 copilot.setup {
   suggestion = {
     keymap = {
@@ -36,6 +39,19 @@ copilot.setup {
       next = "<c-j>",
       prev = "<c-k>",
       dismiss = "<c-h>",
+    },
+    auto_trigger = true,
+  },
+}
+
+local copilotChat = require("CopilotChat")
+copilotChat.setup {
+  debug = true,
+  prompts = {
+    ExplainAll = {
+      text = "Explain how this works.",
+      mapping = "<leader>ccmc",
+      selection = require('CopilotChat.select').visual,
     },
   },
 }
@@ -141,7 +157,19 @@ lvim.plugins = {
         panel = { enabled = false }
       })
     end,
-  }
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    opts = {
+      debug = true, -- Enable debugging
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
 }
 
 -- Below config is required to prevent copilot overriding Tab with a suggestion
