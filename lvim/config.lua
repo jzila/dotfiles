@@ -20,8 +20,32 @@ lvim.format_on_save = {
 
 -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
 lvim.leader = "\\"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<C-t>"] = ':b#<CR>'
+lvim.keys.normal_mode["<C-w>n"] = ':bn<CR>'
+lvim.keys.normal_mode["<C-w>p"] = ':bp<CR>'
+lvim.keys.normal_mode["<C-w>t"] = ':NvimTreeToggle<CR>'
+
+local ok, copilot = pcall(require, "copilot")
+if not ok then
+  return
+end
+copilot.setup {
+  suggestion = {
+    keymap = {
+      accept = "<c-l>",
+      next = "<c-j>",
+      prev = "<c-k>",
+      dismiss = "<c-h>",
+    },
+  },
+}
+
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-s>",
+  "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>",
+  opts)
 
 -- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 -- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
@@ -37,7 +61,9 @@ lvim.transparent_window = true
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
+lvim.builtin.nvimtree.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
+lvim.builtin.nvimtree.setup.view.adaptive_size = true
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
 -- Automatically install missing parsers when entering buffer
@@ -98,7 +124,45 @@ lvim.builtin.treesitter.auto_install = true
 lvim.plugins = {
   { "lunarvim/colorschemes" },
   { "sainnhe/sonokai" },
+  -- Copilot plugins are defined below:
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false }
+      })
+    end,
+  }
 }
+
+-- Below config is required to prevent copilot overriding Tab with a suggestion
+-- when you're just trying to indent!
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt"
+  then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+local on_tab = vim.schedule_wrap(function(fallback)
+  local cmp = require("cmp")
+  if cmp.visible() and has_words_before() then
+    cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+  else
+    fallback()
+  end
+end)
+lvim.builtin.cmp.mapping["<Tab>"] = on_tab
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
 -- vim.api.nvim_create_autocmd("FileType", {
