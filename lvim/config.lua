@@ -23,6 +23,7 @@ lvim.leader = "\\"
 lvim.keys.normal_mode["<C-t>"] = ':b#<CR>'
 lvim.keys.normal_mode["<C-w>n"] = ':bn<CR>'
 lvim.keys.normal_mode["<C-w>p"] = ':bp<CR>'
+lvim.keys.normal_mode["<C-w>d"] = ':bd<CR>'
 lvim.keys.normal_mode["<C-w>t"] = ':NvimTreeToggle<CR>'
 lvim.keys.visual_mode["<leader>ccq"] = function()
   local input = vim.fn.input("Quick Chat: ")
@@ -169,6 +170,15 @@ lvim.plugins = {
       debug = true, -- Enable debugging
     },
     -- See Commands section for default commands if you want to lazy load on them
+  },
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("lsp-file-operations").setup()
+    end,
   },
 }
 

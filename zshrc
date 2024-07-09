@@ -85,13 +85,6 @@ reporoot() {
     git rev-parse --show-toplevel
 }
 
-gitprompt() {
-    if [[ "${PWD##/keybase/}" != "$PWD" ]]; then
-        return
-    fi
-    git_prompt_info "$@"
-}
-
 gopkgpath() {
     root=$(git rev-parse --show-toplevel)
     gopath=$(go env GOPATH)
@@ -131,7 +124,33 @@ yubikey() {
     fi
 }
 
-PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(gitprompt)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
+csv_to_json() {
+  local input_file="$1"
+  local output_file="$2"
+
+  if [[ ! -f "$input_file" ]]; then
+    echo "Input file does not exist."
+    return 1
+  fi
+
+  if [[ -z "$output_file" ]]; then
+    echo "Please specify an output file."
+    return 1
+  fi
+
+  jq -R -s -c '
+  split("\n") | .[1:] | map(split(",")) |
+  map({
+    id: .[0],
+    name: .[1],
+    age: .[2]
+  })
+  ' "$input_file" > "$output_file"
+  
+  echo "CSV converted to JSON successfully."
+}
+
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%M %* %{$fg[cyan]%}$(repodir) %{$fg_bold[blue]%}$(git_prompt_info)%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%(!.#.➜)%{$fg_bold[blue]%} % %{$reset_color%}'
 
 # fix this for nixos once I'm ready
 # # bun completions
