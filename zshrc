@@ -19,24 +19,20 @@ alias la='ls -la'
 alias l1='ls -1'
 alias l1a='ls -1a'
 alias vim='lvim'
-alias yubigw='yubikey gw'
-
-alias livelock='ssh jzila@192.241.238.163'
 
 alias grep='grep -I --exclude-dir=".git" --exclude-dir="vendor" --exclude-dir="node_modules" --exclude-dir=dist'
 alias grepnolog='grep -I --exclude-dir="*log*" --exclude-dir="*\.svn*" --exclude="*\.svn-base"'
 
 alias gup='git fetch origin && git rebase origin/main'
 alias gds='git --no-pager diff --stat'
+alias gd2='git diff2'
 alias gp='git push'
 alias gfu='git fetch upstream'
 alias gfo='git fetch origin'
 alias gr='git rebase'
-alias grm='git rebase origin/main'
+alias grm='git rebase origin/main main'
 alias ga='git add'
 alias gaa='git add -A'
-
-alias sift='sift --binary-skip'
 
 bindkey -v
 
